@@ -58,13 +58,14 @@ for index, row in crawled_dataset_df.iterrows():
         # Print the chunks
         for idx, chunk in enumerate(semantic_chunks):
             print(f"Chunk {idx+1}:\n{chunk}\n")
-            dataset_df = dataset_df.append({
-                "url":  row['url'],
-                "price":  row['price'],
-                "title": row['title'],
-                "image_urls": row['image_urls'],
-                'content': chunk,
-            }, ignore_index=True)
+            new_row = pd.DataFrame({
+                "url": [row['url']],
+                "price": [row['price']],
+                "title": [row['title']],
+                "image_urls": [row['image_urls']],
+                'content': [chunk]
+            })
+            dataset_df = pd.concat([dataset_df, new_row], ignore_index=True)
 
 print(dataset_df.head(5))
 # drop rows with empty content
